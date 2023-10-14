@@ -5,18 +5,13 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
     # a simple page that says hello
-    @app.route('/hello')
+    @app.route('/')
     def hello():
-        title = 'deeznutz'
-        return render_template('base.html', title = title)
+        return render_template('base.html')
     
-    @app.route('/data')
+    @app.route('/student')
     def data():
-        myData = {
-            'profile': "Mikee",
-            'badges': ['one', 'two', 'three']
-        }
-        return jsonify(myData)
+        return render_template('student.html')
 
 
 
