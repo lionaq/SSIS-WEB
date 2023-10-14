@@ -1,19 +1,28 @@
-from flask import Flask, jsonify, render_template, jsonify
+from flask import Flask, render_template, Blueprint
+from config import DB_USERNAME, DB_PASSWORD, DB_NAME, DB_HOST, SECRET_KEY, BOOTSTRAP_SERVE_LOCAL
+from flask_mysql_connector import MySQL
+from flask_bootstrap import Bootstrap
+
+mysql = MySQL()
+bootstrap = Bootstrap()
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+    app.config.from_mapping(
+        SECRET_KEY=SECRET_KEY,
+        MYSQL_USER=DB_USERNAME,
+        MYSQL_PASSWORD=DB_PASSWORD,
+        MYSQL_HOST=DB_HOST,
+        MYSQL_DB=DB_NAME,
+        #BOOTSTRAP_SERVE_LOCAL=BOOTSTRAP_SERVE_LOCAL
+    )
 
     # a simple page that says hello
     @app.route('/')
-    def hello():
+    def default():
         return render_template('base.html')
     
-    @app.route('/student')
-    def data():
-        return render_template('student.html')
-
-
 
     return app
 
