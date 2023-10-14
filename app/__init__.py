@@ -1,4 +1,3 @@
-from os import name
 from flask import Flask, jsonify, render_template, jsonify
 
 def create_app(test_config=None):
@@ -9,7 +8,7 @@ def create_app(test_config=None):
     @app.route('/hello')
     def hello():
         title = 'deeznutz'
-        return render_template('test.html', title = title)
+        return render_template('base.html', title = title)
     
     @app.route('/data')
     def data():
