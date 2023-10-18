@@ -8,6 +8,14 @@ class students(object):
         students = cursor.fetchall()
         cursor.close()
         return students
+    
+    def insert(self, values):
+        cursor = mysql.connection.cursor(dictionary=True)
+        sql = "INSERT INTO student_table(student_id, first_name, last_name, course_code, year_level, gender) VALUES (%s, %s, %s, %s, %s, %s)"
+        cursor.execute(sql, values)
+        mysql.connection.commit()
+        cursor.close()
+        return students
 
 class courses(object):
 

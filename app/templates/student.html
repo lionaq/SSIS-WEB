@@ -7,6 +7,8 @@
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStudent"> ADD </button>
     </div>
 
+    {%include "table.html"%}
+
     <div class="modal fade" id="addStudent" tabindex="-1" aria-labelledby="addStudentLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -14,19 +16,86 @@
               <h1 class="modal-title fs-5" id="exampleModalLabel">ADD STUDENT</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <br>
             <div class="modal-body">
-              ...
+                {% set csrf_token = csrf_token() %}
+                <form action ="{{url_for('student.insert')}}" method = "POST">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                    <div class="row">
+                        <label for = "First Name" class = "form-label"> Student ID </label>
+                        <div class="col-5">
+                            <input name = "idOne"
+                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            type = "number"
+                            maxlength = "4"
+                            class = "form-control"
+                            placeholder ="Ex. 2021"
+                        />
+                        </div>
+                        <div class="col-1 text-center">
+                            <span>-</span>
+                        </div>
+                        <div class="col-5">
+                            <input name = "idTwo" type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4" required>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col">
+                            <label for = "First Name" class = "form-label"> First Name </label>
+                            <input name = "first_name" type="text" class="form-control" placeholder="First name" aria-label="First name">
+                        </div>
+                        <div class="col">
+                            <label for = "Last Name" class = "form-label"> Last Name </label>
+                            <input name = "last_name" type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+                        </div>
+                    </div>
+                    <br>
+                    <div class = "row">
+                        <div class ="col">
+                            <label for = "Course Code" class = "form-label"> Course Code </label>
+                            <select name = "course_code" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                                <option value="BSCS">BSCS</option>
+                                <option value="BSCA">BSCA</option>
+                                <option value="BSCS">BSCS</option>
+                            </select>
+                        </div>
+
+                        <div class ="col">
+                            <label for = "Year Level" class = "form-label"> Year Level </label>
+                            <select name = "year_level" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+
+                        </div>
+
+                        <div class ="col">
+                            <label for = "Gender" class = "form-label"> Gender </label>
+                            <select name = "gender" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+
+                        </div>
+                    <div>
+                </form>
             </div>
+            <br>
+            <br>
+            <br>
             <div class="modal-footer">
+            
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-success">Save changes</button>
+              <button type="submit" class="btn btn-success" href="/insert">Save changes</button>
             </div>
           </div>
         </div>
-      </div>
-
-    <br>
-    
-    {%include "table.html"%}
+    </div>
 
 {%endblock%}
