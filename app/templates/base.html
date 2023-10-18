@@ -32,14 +32,31 @@
       </div>
     </nav>
     <br>
+
     <div class = "container">
+
+      {%if error %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>ERROR!</strong> Student ID  Already exists.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+
+      {%if success %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> You added a new student successfully.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+
+
 
       <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Search" aria-describedby="button-addon2">
         <button class="btn btn-outline-primary" type="button" id="button-addon2">Search</button>
       </div>
     <br>
-
+  
       {%block content%} {%endblock%}
 
   </div>

@@ -1,3 +1,4 @@
+from sre_constants import SUCCESS
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.Models import studentModel, courseModel
 
@@ -10,7 +11,9 @@ def data():
     print(courseCode)
     courses = [item for item in courseCode]
     print(result)
-    return render_template('student.html', data = result, courses = courses)
+    error = request.args.get('error')
+    success = request.args.get('success')
+    return render_template('student.html', data = result, courses = courses, error = error, success = success)
 
 @student.route('/student/insert', methods = ['POST'])
 def insert():
@@ -26,6 +29,9 @@ def insert():
 
         list = [studentId, first_name, last_name, course_code, year_level, gender]
         print(list)
-        studentModel.insert(list)
-        return redirect (url_for('student.data'))
+        try:
+            studentModel.insert(list)
+            return redirect (url_for('student.data', success = True))
+        except: 
+            return redirect (url_for('student.data', error = True))
 

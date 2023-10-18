@@ -24,13 +24,13 @@
                     <div class="row">
                         <label for = "First Name" class = "form-label"> Student ID </label>
                         <div class="col-5">
-                            <input name = "idOne" type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4" required>
+                            <input name = "idOne" type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4"  minlength = "4" required>
                         </div>
                         <div class="col-1 text-center">
                             <span>-</span>
                         </div>
                         <div class="col-5">
-                            <input name = "idTwo" type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4" required>
+                            <input name = "idTwo" type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4" minlength = "4" required>
                         </div>
                     </div>
 
@@ -52,7 +52,7 @@
                             <label for = "Course Code" class = "form-label"> Course Code </label>
                             <select name = "course_code" class="form-select form-select-sm mb-3" aria-label="Large select example">
                                 {%for item in courses%}
-                                    <option value="{{item}}">{{ item.values()|list|first }}</option>
+                                    <option value="{{item.values()|list|first}}">{{ item.values()|list|first }}</option>
                                 {%endfor%}
                             </select>
                         </div>
