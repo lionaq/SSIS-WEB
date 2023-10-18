@@ -24,13 +24,7 @@
                     <div class="row">
                         <label for = "First Name" class = "form-label"> Student ID </label>
                         <div class="col-5">
-                            <input name = "idOne"
-                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                            type = "number"
-                            maxlength = "4"
-                            class = "form-control"
-                            placeholder ="Ex. 2021"
-                        />
+                            <input name = "idOne" type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4" required>
                         </div>
                         <div class="col-1 text-center">
                             <span>-</span>
@@ -45,11 +39,11 @@
                     <div class="row">
                         <div class="col">
                             <label for = "First Name" class = "form-label"> First Name </label>
-                            <input name = "first_name" type="text" class="form-control" placeholder="First name" aria-label="First name">
+                            <input name = "first_name" type="text" class="form-control" placeholder="First name" aria-label="First name" required>
                         </div>
                         <div class="col">
                             <label for = "Last Name" class = "form-label"> Last Name </label>
-                            <input name = "last_name" type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+                            <input name = "last_name" type="text" class="form-control" placeholder="Last name" aria-label="Last name" required>
                         </div>
                     </div>
                     <br>
@@ -57,12 +51,11 @@
                         <div class ="col">
                             <label for = "Course Code" class = "form-label"> Course Code </label>
                             <select name = "course_code" class="form-select form-select-sm mb-3" aria-label="Large select example">
-                                <option value="BSCS">BSCS</option>
-                                <option value="BSCA">BSCA</option>
-                                <option value="BSCS">BSCS</option>
+                                {%for item in courses%}
+                                    <option value="{{item}}">{{ item.values()|list|first }}</option>
+                                {%endfor%}
                             </select>
                         </div>
-
                         <div class ="col">
                             <label for = "Year Level" class = "form-label"> Year Level </label>
                             <select name = "year_level" class="form-select form-select-sm mb-3" aria-label="Large select example">

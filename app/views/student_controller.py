@@ -1,13 +1,16 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from app.Models import studentModel
+from app.Models import studentModel, courseModel
 
 student = Blueprint('student', __name__)
 
 @student.route('/student')
 def data():
     result = studentModel.all()
+    courseCode = courseModel.all()
+    print(courseCode)
+    courses = [item for item in courseCode]
     print(result)
-    return render_template('student.html', data = result)
+    return render_template('student.html', data = result, courses = courses)
 
 @student.route('/student/insert', methods = ['POST'])
 def insert():
