@@ -21,15 +21,19 @@ def create_app(test_config=None):
     mysql.init_app(app)
     CSRFProtect(app)
     
-    from .views.student_controller import student
-    header = ["yay", "yes", "hello"]
-
     # a simple page that says hello
     @app.route('/')
     def default():
 
-        return render_template('base.html', header = header)
+        return render_template('base.html')
     
+    from .views.student_controller import student
+    from .views.course_controller import course
+    from .views.college_controller import college
+
     app.register_blueprint(student)
+    app.register_blueprint(course)
+    app.register_blueprint(college)
+    
     return app
 
