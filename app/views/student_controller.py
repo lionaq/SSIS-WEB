@@ -8,3 +8,4 @@ def data():
     result = studentModel.all()
     print(result)
     return render_template('student.html', data = result)
+
