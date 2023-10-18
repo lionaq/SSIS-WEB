@@ -7,14 +7,14 @@
       </tr>
   </thead>
   <tbody>
-    {% for student in data %}
+    {% for entry in data %}
     <tr>
-      {%for row in student.values()%}
+      {%for row in entry.values()%}
         <td>{{ row }}</td>
       {%endfor%}
       <td>
         <button class="btn btn-warning btn-sm">Edit</button>
-        <button class="btn btn-danger btn-sm" student-id="{{ student.id }}" onclick="confirmDeleteStudent(this)">Delete</button>
+        <button class="btn btn-danger btn-sm">Delete</button>
       </td>
     </tr>
     {% endfor %}
