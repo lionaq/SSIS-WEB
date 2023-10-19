@@ -44,7 +44,7 @@ class courses(object):
     
     def insert(self, values):
         cursor = mysql.connection.cursor(dictionary=True)
-        sql = "INSERT INTO course_table(course_code, course, college_code) VALUES (%s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO course_table(course_code, course, college_code) VALUES (%s, %s, %s)"
         cursor.execute(sql, values)
         mysql.connection.commit()
         cursor.close()
