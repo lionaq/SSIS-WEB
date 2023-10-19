@@ -12,11 +12,11 @@
     {% for entry in data %}
     <tr>
       {%for row in entry.values()%}
-        <td>{{ row }}</td>
+        <td contenteditable="true">{{ row }}</td>
       {%endfor%}
       <td>
-        <button class="btn btn-primary btn-sm">Edit</button>
-        <button class="btn btn-danger btn-sm">Delete</button>
+        <a href = "student/update/{{entry.values()|list|first}}" class="btn btn-primary btn-sm" data-bs-toggle = "modal" data-bs-target ="#modalEdit">Edit</a>
+        <a href = "student/delete/{{entry.values()|list|first}}"class="btn btn-danger btn-sm" data-bs-toggle = "modal" data-bs-target ="#modalDelete" onclick = "return confirm('Confirm Deletion?')">Delete</a>
       </td>
     </tr>
     {% endfor %}

@@ -8,7 +8,141 @@
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStudent"> ADD </button>
     </div>
 
-    {%include "table.html"%}
+    <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
+        <table class="table table-condensed text-center">
+          <thead class = "sticky-top">
+              <tr>
+                {%for column in data[0]%} <th scope="col">{{column.replace("_", " ").upper()}}</th> {% endfor %}
+                <th scope = "col"> ACTIONS </th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for entry in data %}
+            <tr>
+              {%for row in entry.values()%}
+                <td>{{ row }}</td>
+              {%endfor%}
+              <td>
+                <button type="button" id ="editButton" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                <a href = "student/delete/{{entry.values()|list|first}}"class="btn btn-danger btn-sm" data-bs-toggle = "modal" data-bs-target ="#modalDelete" onclick = "return confirm('Confirm Deletion?')">Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        </div>
+
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fs-5" id="editModalLabel">EDIT STUDENT</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editForm" method="POST">
+                            <br>
+                            <div class="row">
+                                <label for = "First Name" class = "form-label"> Student ID </label>
+                                <div class="col-5">
+                                    <input name = "idOne_edit" id = "idEditOne"  type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4"  minlength = "4" required>
+                                </div>
+                                <div class="col-1 text-center">
+                                    <span>-</span>
+                                </div>
+                                <div class="col-5">
+                                    <input name = "idTwo_edit" id = "idEditTwo" type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4" minlength = "4" required>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <label for = "First Name" class = "form-label"> First Name </label>
+                                    <input name = "first_name_edit" id = "fNameEdit" type="text" class="form-control" placeholder="First name" aria-label="First name" required>
+                                </div>
+                                <div class="col">
+                                    <label for = "Last Name" class = "form-label"> Last Name </label>
+                                    <input name = "last_name_edit" id = "lNameEdit" type="text" class="form-control" placeholder="Last name" aria-label="Last name" required>
+                                </div>
+                            </div>
+                            <br>
+                            <div class = row>
+                                <div class ="col">
+                                    <label for = "Course Code" class = "form-label"> Course Code </label>
+                                    <select name = "course_code_edit" id ="cCodeEdit" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                                        {%for item in courses%}
+                                            <option value="{{item.values()|list|first}}">{{ item.values()|list|first }}</option>
+                                        {%endfor%}
+                                    </select>
+                                </div>
+
+                                <div class ="col">
+                                    <label for = "Year Level" class = "form-label"> Year Level </label>
+                                    <select name = "year_level_edit" id="yLevelEdit" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+        
+                                </div>
+
+                                <div class ="col">
+                                    <label for = "Gender" class = "form-label"> Gender </label>
+                                    <select name = "gender_edit" id ="gEdit" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+        
+                                </div>
+                            
+                            </div>
+                            
+
+                        </form>
+                    </div>
+                                <br>
+            <br>
+            <br>
+                    <div class="modal-footer">
+            
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" href="/insert">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script>
+            $('button[data-bs-toggle="modal"]').click(function() {
+                console.log("Edit button clicked.");
+                var row = $(this).closest('tr');
+                var studentId = row.find('td:eq(0)').text();
+                var fNameEdit = row.find('td:eq(1)').text();
+                var lNameEdit = row.find('td:eq(2)').text();
+                var cCodeEdit = row.find('td:eq(3)').text();
+                var yLevelEdit = row.find('td:eq(4)').text();
+                var gEdit = row.find('td:eq(5)').text();
+                console.log(cCodeEdit);
+
+                splitId = studentId.split("-");
+                console.log(splitId);
+                var idOne = splitId[0];
+                var idTwo = splitId[1];
+
+                $('#idEditOne').val(idOne);
+                $('#idEditTwo').val(idTwo);
+                $('#fNameEdit').val(fNameEdit);
+                $('#lNameEdit').val(lNameEdit);
+                $('#cCodeEdit').val(cCodeEdit);
+                $('#yLevelEdit').val(yLevelEdit);
+                $('#gEdit').val(gEdit);
+                // Set values of other fields similarly
+            });
+          </script>
+<!----add Modal---->
 
     <div class="modal fade" id="addStudent" tabindex="-1" aria-labelledby="addStudentLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -25,13 +159,13 @@
                     <div class="row">
                         <label for = "First Name" class = "form-label"> Student ID </label>
                         <div class="col-5">
-                            <input name = "idOne" type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4"  minlength = "4" required>
+                            <input name = "idOne"  type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4"  minlength = "4" required>
                         </div>
                         <div class="col-1 text-center">
                             <span>-</span>
                         </div>
                         <div class="col-5">
-                            <input name = "idTwo" type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4" minlength = "4" required>
+                            <input name = "idTwo"  type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4" minlength = "4" required>
                         </div>
                     </div>
 

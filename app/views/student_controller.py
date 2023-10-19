@@ -34,4 +34,4 @@ def insert():
             return redirect (url_for('student.data', success = True))
         except: 
             return redirect (url_for('student.data', error = True))
-
+        
