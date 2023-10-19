@@ -55,3 +55,10 @@ def update():
             return redirect (url_for('student.data', success = True))
         except: 
             return redirect (url_for('student.data', error = True))
+        
+@student.route('/student/delete/<string:id>', methods=['POST'])
+def delete(id):
+    if request.method == "POST":
+        data = (id,)
+        studentModel.delete(data)
+        return redirect(url_for('student.data', success=True))
