@@ -15,6 +15,7 @@ class students(object):
         cursor.execute(sql, values)
         mysql.connection.commit()
         cursor.close()
+        return
     
     def update(self, value):
         cursor = mysql.connection.cursor(dictionary=True)
@@ -22,13 +23,15 @@ class students(object):
         cursor.execute(sql, value)
         mysql.connection.commit()
         cursor.close()
+        return
     
     def delete(self,value):
         cursor = mysql.connection.cursor(dictionary=True)
-        sql = "DELETE FROM course_table WHERE courseCode = %s"
+        sql = "DELETE FROM student_table WHERE student_id = %s"
         cursor.execute(sql, value)
         mysql.connection.commit()
         cursor.close()
+        return
 
 class courses(object):
 
@@ -47,6 +50,7 @@ class colleges(object):
         colleges = cursor.fetchall()
         cursor.close()
         return colleges
+
 
 
         
