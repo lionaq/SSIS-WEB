@@ -1,5 +1,6 @@
 {%block search%}
 {%set fHeader =  data[0].keys()|first %}
+
 <div class="input-group mb-3">
     <div class="dropdown">
       <button id="dropdownBtn" class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{fHeader.replace("_", " ").upper()}}</button>
@@ -7,7 +8,7 @@
         {%for column in data[0]%}<li><button class="dropdown-item" data-value="{{loop.index-1}}">{{column.replace("_", " ").upper()}}</button></li>{% endfor %}
       </ul>
     </div>
-    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Search" aria-describedby="button-addon2" id = "searchInput" onkeyup = 'search()'>
+    <input type="text" class="form-control" placeholder=" Search Here..." aria-label="Search" aria-describedby="button-addon2" id = "searchInput" onkeyup = 'search()'>
   </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
