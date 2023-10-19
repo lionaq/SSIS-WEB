@@ -34,4 +34,24 @@ def insert():
             return redirect (url_for('student.data', success = True))
         except: 
             return redirect (url_for('student.data', error = True))
-        
+
+@student.route('/student/update', methods = ['POST'])
+def update():
+    if request.method == "POST":
+
+        idOne = request.form['idOne_edit']
+        idTwo = request.form['idTwo_edit']
+        studentId = idOne + '-' + idTwo
+        first_name = request.form['first_name_edit']
+        last_name = request.form['last_name_edit']
+        course_code = request.form['course_code_edit']
+        year_level = request.form['year_level_edit']
+        gender = request.form['gender_edit']
+
+        list = [ first_name, last_name, course_code, year_level, gender, studentId]
+        print(list)
+        try:
+            studentModel.update(list)
+            return redirect (url_for('student.data', success = True))
+        except: 
+            return redirect (url_for('student.data', error = True))
