@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, redirect, url_for
 from app.Models import collegeModel
 
 college = Blueprint('college', __name__)
@@ -14,11 +14,10 @@ def data():
 @college.route('/college/insert', methods = ['POST'])
 def insert():
     if request.method == "POST":
-        courseCode = request.form['course_code']
-        course = request.form['course']
         collegeCode = request.form['college_code']
+        name = request.form['name']
 
-        list = [courseCode.upper(), course, collegeCode]
+        list = [collegeCode.upper(), name.title()]
 
         print(list)
         try:
@@ -32,11 +31,10 @@ def insert():
 def update():
     if request.method == "POST":
 
-        college_code = request.form['course_code_edit']
-        course_edit = request.form['course_edit']
-        college_code_edit = request.form['college_code_edit']
-
-        list = [course_edit.title(), college_code_edit, college_code]
+        college_code = request.form['college_code_edit']
+        name_edit = request.form['name_edit']
+        print(name_edit)
+        list = [name_edit.title(), college_code]
         print(list)
         try:
             collegeModel.update(list)
