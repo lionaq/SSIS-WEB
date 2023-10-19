@@ -2,16 +2,20 @@
 {%block title %} Students {% endblock %}
 {%block studentLink%} nav-link active {% endblock %}
 
-{%block content%}
+{%set tableid = "studentTable"%}
 
+{%block content%}
+{%include "search.html"%}
+
+<br>
     <div class = "container">
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStudent"> ADD </button>
     </div>
 
 
     <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
-        <table class="table table-condensed text-center">
-          <thead class = "sticky-top">
+        <table class="table table-condensed text-center" id = "studentTable">
+          <thead class = "sticky-top z-3">
               <tr>
                 {%for column in data[0]%} <th scope="col">{{column.replace("_", " ").upper()}}</th> {% endfor %}
                 <th scope = "col"> ACTIONS </th>
@@ -120,19 +124,19 @@
           <script>
             $('button[data-bs-toggle="modal"]').click(function() {
                 console.log("Edit button clicked.");
-                var row = $(this).closest('tr');
-                var studentId = row.find('td:eq(0)').text();
-                var fNameEdit = row.find('td:eq(1)').text();
-                var lNameEdit = row.find('td:eq(2)').text();
-                var cCodeEdit = row.find('td:eq(3)').text();
-                var yLevelEdit = row.find('td:eq(4)').text();
-                var gEdit = row.find('td:eq(5)').text();
+                let row = $(this).closest('tr');
+                let studentId = row.find('td:eq(0)').text();
+                let fNameEdit = row.find('td:eq(1)').text();
+                let lNameEdit = row.find('td:eq(2)').text();
+                let cCodeEdit = row.find('td:eq(3)').text();
+                let yLevelEdit = row.find('td:eq(4)').text();
+                let gEdit = row.find('td:eq(5)').text();
                 console.log(cCodeEdit);
 
                 splitId = studentId.split("-");
                 console.log(splitId);
-                var idOne = splitId[0];
-                var idTwo = splitId[1];
+                let idOne = splitId[0];
+                let idTwo = splitId[1];
 
                 $('#idEditOne').val(idOne);
                 $('#idEditTwo').val(idTwo);
@@ -144,7 +148,6 @@
                 // Set values of other fields similarly
             });
           </script>
-
 <!----add Modal---->
 
     <div class="modal fade" id="addStudent" tabindex="-1" aria-labelledby="addStudentLabel" aria-hidden="true">
