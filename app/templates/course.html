@@ -10,11 +10,118 @@
 
 <br>
     <div class = "container d-flex justify-content-center">
-        <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#addStudent"> ADD STUDENT </button>
+        <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#addCourse"> ADD COURSE </button>
     </div>
 <br>
 
 {%include "table.html"%}
 
+<!----edit Modal---->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editCourseLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">EDIT COURSE</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <br>
+        <div class="modal-body">
+            <form action ="{{url_for('course.update')}}" method = "POST">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+    
+                <div>
+                    <label for = "cCode" class = "form-label"> Course Code </label>
+                    <input name = "course_code_edit" id = "cCode" type="text" class="form-control" placeholder="Ex. BSCS" aria-label="Course Code" maxlength ="10" required>
+                </div>
+    
+                <div>
+                    <label for = "course" class = "form-label"> Course </label>
+                    <input name = "course_edit" id = "course" type="text" class="form-control" placeholder="Ex. Bachelor of Science in Computer Science" aria-label="Course" maxlength ="80" required>
+                </div>
+    
+                <div class>
+                    <label for = "cCodeEdit" class = "form-label"> Course Code </label>
+                    <select name = "college_code_edit" id ="cCodeEdit" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                        {%for item in college%}
+                            <option value="{{item.values()|list|first}}">{{ item.values()|list|first }}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+    
+                <br>
+                <br>
+                <br>
+                <div class="modal-footer">
+                
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-success">Save changes</button>
+                </div>
+    
+            </form>
+        </div>
+      </div>
+    </div>
+    </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $('button[data-bs-toggle="modal"]').click(function() {
+        console.log("Edit button clicked.");
+        let row = $(this).closest('tr');
+        let course_code = row.find('td:eq(0)').text();
+        let course = row.find('td:eq(1)').text();
+        let college_code = row.find('td:eq(2)').text();
+        $('#cCode').val(course_code);
+        $('#course').val(course);
+        $('#cCodeEdit').val(college_code);
+    });
+  </script>
+<!----add Modal---->
+
+<div class="modal fade" id="addCourse" tabindex="-1" aria-labelledby="addCourseLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5" id="exampleModalLabel">ADD COURSE</h1>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <br>
+    <div class="modal-body">
+        <form action ="{{url_for('course.insert')}}" method = "POST">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+
+            <div>
+                <label for = "cCode" class = "form-label"> Course Code </label>
+                <input name = "course_code" id = "cCode" type="text" class="form-control" placeholder="Ex. BSCS" aria-label="Course Code" maxlength ="10" required>
+            </div>
+
+            <div>
+                <label for = "course" class = "form-label"> Course </label>
+                <input name = "course" id = "course" type="text" class="form-control" placeholder="Ex. Bachelor of Science in Computer Science" aria-label="Course" maxlength ="80" required>
+            </div>
+
+            <div class>
+                <label for = "cCodeEdit" class = "form-label"> Course Code </label>
+                <select name = "college_code" id ="cCodeEdit" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                    {%for item in college%}
+                        <option value="{{item.values()|list|first}}">{{ item.values()|list|first }}</option>
+                    {%endfor%}
+                </select>
+            </div>
+
+            <br>
+            <br>
+            <br>
+            <div class="modal-footer">
+            
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Save changes</button>
+            </div>
+
+        </form>
+    </div>
+  </div>
+</div>
+</div>
 
 {%endblock%}
