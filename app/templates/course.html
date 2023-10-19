@@ -2,6 +2,19 @@
 {%block title %} College {% endblock %}
 {%block courseLink%} nav-link active {% endblock %}
 
+{%set tableid = "courseTable"%}
+{%set urlRedirect = "course.delete"%}
+
 {%block content%}
+{%include "search.html"%}
+
+<br>
+    <div class = "container d-flex justify-content-center">
+        <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#addStudent"> ADD STUDENT </button>
+    </div>
+<br>
+
 {%include "table.html"%}
+
+
 {%endblock%}
