@@ -76,7 +76,30 @@ class colleges(object):
         colleges = cursor.fetchall()
         cursor.close()
         return colleges
+    
+    def insert(self, values):
+        cursor = mysql.connection.cursor(dictionary=True)
+        sql = "INSERT INTO college_table(college_code, name) VALUES (%s, %s)"
+        cursor.execute(sql, values)
+        mysql.connection.commit()
+        cursor.close()
+        return
+    
+    def update(self, value):
+        cursor = mysql.connection.cursor(dictionary=True)
+        sql = "UPDATE college_table SET name = %s WHERE college_code = %s"
+        cursor.execute(sql, value)
+        mysql.connection.commit()
+        cursor.close()
+        return
 
+    def delete(self,value):
+        cursor = mysql.connection.cursor(dictionary=True)
+        sql = "DELETE FROM college_table WHERE college_code = %s"
+        cursor.execute(sql, value)
+        mysql.connection.commit()
+        cursor.close()
+        return
 
 
         
