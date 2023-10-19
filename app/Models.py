@@ -15,7 +15,6 @@ class students(object):
         cursor.execute(sql, values)
         mysql.connection.commit()
         cursor.close()
-        return students
     
     def update(self, value):
         cursor = mysql.connection.cursor(dictionary=True)
@@ -23,7 +22,13 @@ class students(object):
         cursor.execute(sql, value)
         mysql.connection.commit()
         cursor.close()
-        return students
+    
+    def delete(self,value):
+        cursor = mysql.connection.cursor(dictionary=True)
+        sql = "DELETE FROM course_table WHERE courseCode = %s"
+        cursor.execute(sql, value)
+        mysql.connection.commit()
+        cursor.close()
 
 class courses(object):
 
