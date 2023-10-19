@@ -1,27 +1,24 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from app.Models import courseModel
+from app.Models import courseModel, collegeModel
 
 course = Blueprint('course', __name__)
 
 @course.route('/course')
 def data():
     result = courseModel.all()
+    college = collegeModel.all()
     print(result)
-    return render_template('course.html', data = result)
+    return render_template('course.html', data = result, college = college)
 
 @course.route('/course/insert', methods = ['POST'])
 def insert():
     if request.method == "POST":
-        idOne = request.form['idOne']
-        idTwo = request.form['idTwo']
-        studentId = idOne + '-' + idTwo
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        course_code = request.form['course_code']
-        year_level = request.form['year_level']
-        gender = request.form['gender']
+        courseCode = request.form['course_code']
+        course = request.form['course']
+        collegeCode = request.form['college_code']
 
-        list = [studentId, first_name, last_name, course_code, year_level, gender]
+        list = [courseCode.upper(), course, collegeCode]
+
         print(list)
         try:
             courseModel.insert(list)
@@ -33,16 +30,11 @@ def insert():
 def update():
     if request.method == "POST":
 
-        idOne = request.form['idOne_edit']
-        idTwo = request.form['idTwo_edit']
-        studentId = idOne + '-' + idTwo
-        first_name = request.form['first_name_edit']
-        last_name = request.form['last_name_edit']
-        course_code = request.form['course_code_edit']
-        year_level = request.form['year_level_edit']
-        gender = request.form['gender_edit']
+        college_code = request.form['course_code_edit']
+        course_edit = request.form['course_edit']
+        college_code_edit = request.form['college_code_edit']
 
-        list = [ first_name, last_name, course_code, year_level, gender, studentId]
+        list = [course_edit, college_code_edit, college_code]
         print(list)
         try:
             courseModel.update(list)
