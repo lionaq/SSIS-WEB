@@ -34,7 +34,7 @@ def update():
         course_edit = request.form['course_edit']
         college_code_edit = request.form['college_code_edit']
 
-        list = [course_edit, college_code_edit, college_code]
+        list = [course_edit.title(), college_code_edit, college_code]
         print(list)
         try:
             courseModel.update(list)
