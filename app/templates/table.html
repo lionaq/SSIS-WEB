@@ -1,26 +1,29 @@
 
 {%block table%}
 <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
-<table class="table table-condensed text-center">
-  <thead class = "sticky-top">
+  <table class="table table-condensed text-center" id = "{{tableid}}">
+    <thead class = "sticky-top z-3">
+        <tr>
+          {%for column in data[0]%} <th scope="col">{{column.replace("_", " ").upper()}}</th> {% endfor %}
+          <th scope = "col"> ACTIONS </th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for entry in data %}
       <tr>
-        {%for column in data[0]%} <th scope="col">{{column.replace("_", " ").upper()}}</th> {% endfor %}
-        <th scope = "col"> ACTIONS </th>
+        {%for row in entry.values()%}
+          <td>{{ row }}</td>
+        {%endfor%}
+        <td>
+          <form action ="{{url_for(urlRedirect, id = entry.values()|list|first)}}" method="POST">
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+              <button type="button" id ="editButton" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+              <button type ="submit" class = "btn btn-danger btn-sm" onclick = "return confirm('Delete Student {{entry.values()|list|first}} ?')">Delete</button>
+          </form>
+        </td>
       </tr>
-  </thead>
-  <tbody>
-    {% for entry in data %}
-    <tr>
-      {%for row in entry.values()%}
-        <td contenteditable="true">{{ row }}</td>
-      {%endfor%}
-      <td>
-        <a href = "student/update/{{entry.values()|list|first}}" class="btn btn-primary btn-sm" data-bs-toggle = "modal" data-bs-target ="#modalEdit">Edit</a>
-        <a href = "student/delete/{{entry.values()|list|first}}"class="btn btn-danger btn-sm" data-bs-toggle = "modal" data-bs-target ="#modalDelete" onclick = "return confirm('Confirm Deletion?')">Delete</a>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-</div>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
   {%endblock%}

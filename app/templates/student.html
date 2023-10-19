@@ -3,17 +3,21 @@
 {%block studentLink%} nav-link active {% endblock %}
 
 {%set tableid = "studentTable"%}
+{%set urlRedirect = "student.delete"%}
 
 {%block content%}
 {%include "search.html"%}
 
 <br>
-    <div class = "container">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStudent"> ADD </button>
+    <div class = "container d-flex justify-content-center">
+        <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#addStudent"> ADD STUDENT </button>
     </div>
+<br>
 
+    {%include "table.html"%}
 
-    <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
+    <!--
+     <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
         <table class="table table-condensed text-center" id = "studentTable">
           <thead class = "sticky-top z-3">
               <tr>
@@ -38,7 +42,8 @@
             {% endfor %}
           </tbody>
         </table>
-        </div>
+        </div>} 
+        -->
 <!----edit Modal---->
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -52,7 +57,7 @@
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
                             <br>
                             <div class="row">
-                                <label for = "First Name" class = "form-label"> Student ID </label>
+                                <label for = "idEditOne"  class = "form-label"> Student ID </label>
                                 <div class="col-3">
                                     <input name = "idOne_edit" id = "idEditOne"  type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4"  minlength = "4"  style = "background-color:  #E9ECEF; color = 6C757D" readonly>
                                 </div>
@@ -66,18 +71,18 @@
                             <br>
                             <div class="row">
                                 <div class="col">
-                                    <label for = "First Name" class = "form-label"> First Name </label>
+                                    <label for = "fNameEdit" class = "form-label"> First Name </label>
                                     <input name = "first_name_edit" id = "fNameEdit" type="text" class="form-control" placeholder="First name" aria-label="First name" maxlength ="40" required>
                                 </div>
                                 <div class="col">
-                                    <label for = "Last Name" class = "form-label"> Last Name </label>
+                                    <label for = "lNameEdit" class = "form-label"> Last Name </label>
                                     <input name = "last_name_edit" id = "lNameEdit" type="text" class="form-control" placeholder="Last name" aria-label="Last name" maxlength ="40" required>
                                 </div>
                             </div>
                             <br>
                             <div class = row>
                                 <div class ="col">
-                                    <label for = "Course Code" class = "form-label"> Course Code </label>
+                                    <label for = "cCodeEdit" class = "form-label"> Course Code </label>
                                     <select name = "course_code_edit" id ="cCodeEdit" class="form-select form-select-sm mb-3" aria-label="Large select example">
                                         {%for item in courses%}
                                             <option value="{{item.values()|list|first}}">{{ item.values()|list|first }}</option>
@@ -86,7 +91,7 @@
                                 </div>
 
                                 <div class ="col">
-                                    <label for = "Year Level" class = "form-label"> Year Level </label>
+                                    <label for = "yLevelEdit" class = "form-label"> Year Level </label>
                                     <select name = "year_level_edit" id="yLevelEdit" class="form-select form-select-sm mb-3" aria-label="Large select example">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -97,7 +102,7 @@
                                 </div>
 
                                 <div class ="col">
-                                    <label for = "Gender" class = "form-label"> Gender </label>
+                                    <label for = "gEdit" class = "form-label"> Gender </label>
                                     <select name = "gender_edit" id ="gEdit" class="form-select form-select-sm mb-3" aria-label="Large select example">
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
@@ -162,7 +167,7 @@
                 <form action ="{{url_for('student.insert')}}" method = "POST">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
                     <div class="row">
-                        <label for = "First Name" class = "form-label"> Student ID </label>
+                        <label for = "idOne" class = "form-label"> Student ID </label>
                         <div class="col-3">
                             <input name = "idOne"  type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4"  minlength = "4" required>
                         </div>
@@ -178,27 +183,27 @@
 
                     <div class="row">
                         <div class="col">
-                            <label for = "First Name" class = "form-label"> First Name </label>
-                            <input name = "first_name" type="text" class="form-control" placeholder="First name" aria-label="First name" maxlength ="40" required>
+                            <label for = "fName" class = "form-label"> First Name </label>
+                            <input name = "first_name" id = "fName" type="text" class="form-control" placeholder="First name" aria-label="First name" maxlength ="40" required>
                         </div>
                         <div class="col">
-                            <label for = "Last Name" class = "form-label"> Last Name </label>
-                            <input name = "last_name" type="text" class="form-control" placeholder="Last name" aria-label="Last name" maxlength ="40" required>
+                            <label for = "lName" class = "form-label"> Last Name </label>
+                            <input name = "last_name" id = "lName" type="text" class="form-control" placeholder="Last name" aria-label="Last name" maxlength ="40" required>
                         </div>
                     </div>
                     <br>
                     <div class = "row">
                         <div class ="col">
-                            <label for = "Course Code" class = "form-label"> Course Code </label>
-                            <select name = "course_code" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                            <label for = "cCode" class = "form-label"> Course Code </label>
+                            <select name = "course_code" id = "cCode" class="form-select form-select-sm mb-3" aria-label="Large select example">
                                 {%for item in courses%}
                                     <option value="{{item.values()|list|first}}">{{ item.values()|list|first }}</option>
                                 {%endfor%}
                             </select>
                         </div>
                         <div class ="col">
-                            <label for = "Year Level" class = "form-label"> Year Level </label>
-                            <select name = "year_level" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                            <label for = "yLevel" class = "form-label"> Year Level </label>
+                            <select name = "year_level" id = "yLevel" class="form-select form-select-sm mb-3" aria-label="Large select example">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -208,8 +213,8 @@
                         </div>
 
                         <div class ="col">
-                            <label for = "Gender" class = "form-label"> Gender </label>
-                            <select name = "gender" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                            <label for = "fGender" class = "form-label"> Gender </label>
+                            <select name = "gender" id = "fGender" class="form-select form-select-sm mb-3" aria-label="Large select example">
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Other">Other</option>
