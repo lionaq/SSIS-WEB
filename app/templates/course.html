@@ -7,11 +7,13 @@
 {%set deleteWarningMsg = "Confirm deletion of Course?"%}
 
 
+{%block pageHeader%} Course List {%endblock%}
+
 {%block top%}
     {%include "search.html"%}
 
     <div class ="col">
-      <button type="button" class="btn btn-outline-success " style = "float:right" data-bs-toggle="modal" data-bs-target="#addCourse"> ADD COURSE </button>
+      <button type="button" class="btn btn-outline-success " style = "float:right" data-bs-toggle="modal" data-bs-target="#addCourse"> ADD NEW COURSE </button>
     </div>
 {%endblock%}
 
