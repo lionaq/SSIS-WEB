@@ -147,13 +147,13 @@
                     <div class="row">
                         <label for = "idOne" class = "form-label"> Student ID </label>
                         <div class="col-3">
-                            <input name = "idOne"  type="text" inputmode = "numeric" class="form-control" placeholder="YYYY" pattern = "\d*" maxlength = "4"  minlength = "4" required>
+                            <input name = "idOne"  type="text" id = "idOne" inputmode = "numeric" class="form-control" placeholder="YYYY" pattern = "\d*" maxlength = "4"  minlength = "4" required>
                         </div>
                         <div class="col-1 text-center">
                             <h3>-</h3>
                         </div>
                         <div class="col-3">
-                            <input name = "idTwo"  type="text" inputmode = "numeric" class="form-control" placeholder="NNNN" pattern = "\d*" maxlength = "4" minlength = "4" required>
+                            <input name = "idTwo"  type="text" id = "idTwo" inputmode = "numeric" class="form-control" placeholder="NNNN" pattern = "\d*" maxlength = "4" minlength = "4" required>
                         </div>
                     </div>
 
@@ -214,4 +214,11 @@
         </div>
     </div>
 
+<script>
+    $('#idOne').keyup(function() {
+        if (this.value.length == this.maxLength) {
+            $('#idTwo').focus();
+        }
+    });
+</script>
 {%endblock%}

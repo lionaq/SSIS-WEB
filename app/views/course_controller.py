@@ -40,7 +40,7 @@ def update():
         print(list)
         try:
             courseModel.update(list)
-            flash(f"Course {course_code.upper()} Edited Successfully!", "info")
+            flash(f"Course {initCourseCode.upper()} Edited Successfully!", "info")
             return redirect (url_for('course.data'))
         except:
             flash(f"Course {course_code.upper()} Already Exists! Cannot Edit Current Course To Existing Course.", "info")
