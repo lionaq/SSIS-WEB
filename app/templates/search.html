@@ -3,8 +3,9 @@
 
 <div class="input-group mb-3">
     <div class="dropdown">
-      <button id="dropdownBtn" class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{fHeader.replace("_", " ").upper()}}</button>
+      <button id="dropdownBtn" class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">ALL COLUMNS</button>
       <ul class="dropdown-menu">
+        <li><button class="dropdown-item" data-value="20">ALL COLUMNS</button></li>
         {%for column in data[0]%}<li><button class="dropdown-item" data-value="{{loop.index-1}}">{{column.replace("_", " ").upper()}}</button></li>{% endfor %}
       </ul>
     </div>
@@ -13,7 +14,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    let column = 0
+    let column = 20
     document.querySelectorAll(".dropdown-item").forEach((item) => {
         item.addEventListener("click", (event) => {
             let dropdown = document.getElementById("dropdownBtn");
@@ -33,15 +34,35 @@
       table = document.getElementById("{{tableid}}");
       tr = table.getElementsByTagName("tr");
     
-      // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[column];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      if(column == 20){
+        for (i = 1; i < tr.length; i++) {
+          match = false;
+          // Loop through all table cells, and check if any contain the search query
+          for (td of tr[i].cells) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              match = true;
+              break;
+            }
+          }
+          // Display or hide the row based on whether it matches the search query
+          if (match) {
             tr[i].style.display = "";
           } else {
             tr[i].style.display = "none";
+          }
+        }
+      }else{
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[column];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
           }
         }
       }
