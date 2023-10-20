@@ -40,8 +40,8 @@ def update():
         list = [collegeCode.upper(), name_edit.title(), initCollegeCode.upper()]
         print(list)
         try:
-            flash(f"College {collegeCode.upper()} Edited Successfully!", "info")
             collegeModel.update(list)
+            flash(f"College {collegeCode.upper()} Edited Successfully!", "info")
             return redirect (url_for('college.data'))
         except:
             flash(f"College {collegeCode.upper()} Already Exists! Cannot Edit Current College To Existing College.", "error")
