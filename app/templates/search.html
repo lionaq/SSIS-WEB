@@ -1,15 +1,16 @@
 {%block search%}
-<div class="input-group mb-3">
-    <div class="dropdown">
-      <button id="dropdownBtn" class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">ALL COLUMNS</button>
-      <ul class="dropdown-menu">
-        <li><button class="dropdown-item" data-value="20">ALL COLUMNS</button></li>
-        {%for column in data[0]%}<li><button class="dropdown-item" data-value="{{loop.index-1}}">{{column.replace("_", " ").upper()}}</button></li>{% endfor %}
-      </ul>
-    </div>
-    <input type="text" class="form-control" placeholder=" Search Here..." aria-label="Search" aria-describedby="button-addon2" id = "searchInput" onkeyup = 'search()'>
+<div class="col-md-9 mx-auto">
+  <div class="input-group mb-4 mx-auto">
+      <div class="dropdown">
+        <button id="dropdownBtn" class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">ALL COLUMNS</button>
+        <ul class="dropdown-menu">
+          <li><button class="dropdown-item" data-value="20">ALL COLUMNS</button></li>
+          {%for column in data[0]%}<li><button class="dropdown-item" data-value="{{loop.index-1}}">{{column.replace("_", " ").upper()}}</button></li>{% endfor %}
+        </ul>
+      </div>
+        <input type="text" class="form-control" placeholder=" Search Here..." aria-label="Search" aria-describedby="button-addon2" id = "searchInput" onkeyup = 'search()'>
   </div>
-
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     let column = 20

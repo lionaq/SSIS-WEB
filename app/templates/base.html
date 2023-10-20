@@ -10,7 +10,7 @@
     </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">STUDENT INFORMATION SYSTEM</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,10 @@
     </nav>
     <br>
 
-    <div class = "container">
+    
+
+    <div class = "container mx-auto">
+
       {%with messages = get_flashed_messages(with_categories=true)%}
         {%if messages%}
         <ul class=flashes>
@@ -55,22 +58,12 @@
         {% endif %}
       {% endwith %}
 
+      <div class="row g-5 mx-auto">
+        {%block top%}
 
-    <!--
-     {%if error %}
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>ERROR!</strong> Student ID  Already exists.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {%endblock%}
       </div>
-      {% endif %}
 
-      {%if success %}
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Success!</strong> You added a new student successfully.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-      {% endif %}
-    -->
 
   
       {%block content%} 

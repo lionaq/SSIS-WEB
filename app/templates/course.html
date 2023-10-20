@@ -5,14 +5,18 @@
 {%set tableid = "courseTable"%}
 {%set urlRedirect = "course.delete"%}
 {%set deleteWarningMsg = "Confirm deletion of Course?"%}
-{%block content%}
-{%include "search.html"%}
 
-<br>
-    <div class = "container d-flex justify-content-center">
-        <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#addCourse"> ADD COURSE </button>
+
+{%block top%}
+    {%include "search.html"%}
+
+    <div class ="col">
+      <button type="button" class="btn btn-outline-success " style = "float:right" data-bs-toggle="modal" data-bs-target="#addCourse"> ADD COURSE </button>
     </div>
-<br>
+{%endblock%}
+
+
+{%block content%}
 
 {%include "table.html"%}
 

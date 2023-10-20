@@ -6,14 +6,16 @@
 {%set urlRedirect = "college.delete"%}
 {%set deleteWarningMsg = "Confirm deletion of College? WARNING: ALL DATA RELATED TO THE COLLEGE WILL BE DELETED PROCEED WITH CAUTION"%}
 
-{%block content%}
-{%include "search.html"%}
 
-<br>
-    <div class = "container d-flex justify-content-center">
-        <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#addCollege"> ADD COLLEGE </button>
+
+{%block top%}
+    {%include "search.html"%}
+    <div class = "col">
+      <button type="button" class="btn btn-outline-success  " style = "float:right" data-bs-toggle="modal" data-bs-target="#addCollege"> ADD COLLEGE </button>
     </div>
-<br>
+{%endblock%}
+
+{%block content%}
 
 {%include "table.html"%}
 

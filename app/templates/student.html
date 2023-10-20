@@ -6,14 +6,15 @@
 {%set urlRedirect = "student.delete"%}
 {%set deleteWarningMsg = "Confirm deletion of student?"%}
 
-{%block content%}
-{%include "search.html"%}
 
-<br>
-    <div class = "container d-flex justify-content-center">
-        <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#addStudent"> ADD STUDENT </button>
+{%block top%}
+    {%include "search.html"%}
+    <div class = "col mx-auto">
+        <button type="button" class="btn btn-outline-success "style = "float:right" data-bs-toggle="modal" data-bs-target="#addStudent"> ADD NEW STUDENT </button>
     </div>
-<br>
+{%endblock%}
+
+{%block content%}
 
     {%include "table.html"%}
 
