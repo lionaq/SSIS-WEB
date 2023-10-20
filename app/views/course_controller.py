@@ -28,22 +28,22 @@ def insert():
             flash(f"Course {courseCode.upper()} Already Exists!", "error")
             return redirect (url_for('course.data'))
 
-@course.route('/course/update/<string:id>', methods = ['POST'])
-def update(id):
+@course.route('/course/update/', methods = ['POST'])
+def update():
     if request.method == "POST":
-        print("THE ID IS:", id)
-        college_code = request.form['course_code_edit']
+        initCourseCode = request.form['initCourseCode']
+        course_code = request.form['course_code_edit']
         course_edit = request.form['course_edit']
         college_code_edit = request.form['college_code_edit']
 
-        list = [course_edit.title(), college_code_edit, college_code]
+        list = [course_code.upper(), course_edit.title(), college_code_edit, initCourseCode]
         print(list)
         try:
             courseModel.update(list)
-            flash(f"Course {college_code.upper()} Edited Successfully!", "info")
+            flash(f"Course {course_code.upper()} Edited Successfully!", "info")
             return redirect (url_for('course.data'))
         except:
-            flash(f"Course {college_code.upper()} Already Exists! Cannot Edit Current Course To Existing Course.", "info")
+            flash(f"Course {course_code.upper()} Already Exists! Cannot Edit Current Course To Existing Course.", "info")
             return redirect (url_for('course.data'))
         
 @course.route('/course/delete/<string:id>', methods=['POST'])

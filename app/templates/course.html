@@ -26,12 +26,13 @@
         </div>
         <br>
         <div class="modal-body">
-            <form action ="{{url_for('course.update')}}" method = "POST">
+            <form action = "{{url_for('course.update', id = 'sheesh')}}" method = "POST" id = "editForm">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
     
                 <div>
+                    <input type="hidden" name="initCourseCode" id = "initCourseCode" readonly>
                     <label for = "cCode" class = "form-label"> Course Code </label>
-                    <input name = "course_code_edit" id = "cCode" type="text" class="form-control" placeholder="Ex. BSCS" aria-label="Course Code" maxlength ="10" style = "background-color:  #E9ECEF; color = 6C757D" readonly>
+                    <input name = "course_code_edit" id = "cCode" type="text" class="form-control" placeholder="Ex. BSCS" aria-label="Course Code" maxlength ="10" required>
                 </div>
     
                 <div>
@@ -74,6 +75,7 @@
         $('#cCode').val(course_code);
         $('#course').val(course);
         $('#cCodeEdit').val(college_code);
+        $('#initCourseCode').val(course_code);
     });
   </script>
 <!----add Modal---->

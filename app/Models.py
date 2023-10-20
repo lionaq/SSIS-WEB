@@ -52,7 +52,7 @@ class courses(object):
     
     def update(self, value):
         cursor = mysql.connection.cursor(dictionary=True)
-        sql = "UPDATE course_table SET course = %s, college_code = %s WHERE course_code = %s"
+        sql = "UPDATE course_table SET course_code = %s, course = %s, college_code = %s WHERE course_code = %s"
         cursor.execute(sql, value)
         mysql.connection.commit()
         cursor.close()
