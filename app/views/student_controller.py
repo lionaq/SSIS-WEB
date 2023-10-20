@@ -1,5 +1,5 @@
 from sre_constants import SUCCESS
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.Models import studentModel, courseModel
 
 student = Blueprint('student', __name__)
@@ -11,9 +11,7 @@ def data():
     print(courseCode)
     courses = [item for item in courseCode]
     print(result)
-    error = request.args.get('error')
-    success = request.args.get('success')
-    return render_template('student.html', data = result, courses = courses, error = error, success = success)
+    return render_template('student.html', data = result, courses = courses)
 
 @student.route('/student/insert', methods = ['POST'])
 def insert():
@@ -31,9 +29,11 @@ def insert():
         print(list)
         try:
             studentModel.insert(list)
-            return redirect (url_for('student.data', success = True))
-        except: 
-            return redirect (url_for('student.data', error = True))
+            flash(f"Student {studentId} Added Successfully!", "info")
+            return redirect (url_for('student.data'))
+        except:
+            flash(f"Student ID '{studentId}' already exists!", "error") 
+            return redirect (url_for('student.data'))
 
 @student.route('/student/update', methods = ['POST'])
 def update():
@@ -52,13 +52,14 @@ def update():
         print(list)
         try:
             studentModel.update(list)
-            return redirect (url_for('student.data', success = True))
+            return redirect (url_for('student.data'))
         except: 
-            return redirect (url_for('student.data', error = True))
+            return redirect (url_for('student.data'))
         
 @student.route('/student/delete/<string:id>', methods=['POST'])
 def delete(id):
     if request.method == "POST":
         data = (id,)
         studentModel.delete(data)
-        return redirect(url_for('student.data', success=True))
+        flash(f"Student {id} Deleted Successfully!", "info")
+        return redirect(url_for('student.data'))
