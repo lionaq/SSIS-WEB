@@ -50,8 +50,9 @@ def update():
 
         list = [ first_name, last_name, course_code, year_level, gender, studentId]
         print(list)
-        try:
+        try:  
             studentModel.update(list)
+            flash(f"Student {studentId} Edited Successfully!", "info")
             return redirect (url_for('student.data'))
         except: 
             return redirect (url_for('student.data'))

@@ -22,9 +22,9 @@ def insert():
         print(list)
         try:
             collegeModel.insert(list)
-            return redirect (url_for('college.data', success = True))
+            return redirect (url_for('college.data'))
         except: 
-            return redirect (url_for('college.data', error = True))
+            return redirect (url_for('college.data'))
 
 
 @college.route('/college/update', methods = ['POST'])
@@ -38,9 +38,9 @@ def update():
         print(list)
         try:
             collegeModel.update(list)
-            return redirect (url_for('college.data', success = True))
+            return redirect (url_for('college.data'))
         except: 
-            return redirect (url_for('college.data', error = True))
+            return redirect (url_for('college.data'))
         
 
 @college.route('/college/delete/<string:id>', methods=['POST'])
@@ -48,4 +48,4 @@ def delete(id):
     if request.method == "POST":
         data = (id,)
         collegeModel.delete(data)
-        return redirect(url_for('college.data', success=True))
+        return redirect(url_for('college.data'))
