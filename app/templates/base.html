@@ -10,6 +10,7 @@
     </head>
 
   <body>
+    
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">STUDENT INFORMATION SYSTEM</a>
@@ -31,9 +32,10 @@
         </div>
       </div>
     </nav>
-    <br>
 
-    
+    <div class = "container p-4">
+      <h3 class = "display-6">{%block pageHeader%} Simple Student Information System <small class="text-body-secondary small" style = "zoom:0.4;">by Romeo Giullano R. Aclo</small> {%endblock%}</h3>
+    </div>
 
     <div class = "container mx-auto">
 
@@ -58,7 +60,7 @@
         {% endif %}
       {% endwith %}
 
-      <div class="row g-5 mx-auto">
+      <div class="row g-5 mx-auto pb-3">
         {%block top%}
 
         {%endblock%}
@@ -67,7 +69,38 @@
 
   
       {%block content%} 
-
+      <div class="card-group p-4 m-3">
+        <div class="card border-0 m-1 p-1">
+          <img src="https://static-00.iconduck.com/assets.00/male-student-icon-1767x2048-crw5ld1y.png" width = "350" height = "250" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">STUDENTS</h5>
+            <p class="card-text">See, add, delete or change information of students such as their student ID, name, course taken, year level and gender.</p>
+          </div>
+          <div class="card-footer">
+            <a href="/student" class="btn btn-primary">Students Page</a>
+          </div>
+        </div>
+        <div class="card border-0 m-1 p-1">
+          <img src="https://static.vecteezy.com/system/resources/previews/002/746/143/original/college-classes-flat-color-icon-education-progress-and-studying-years-in-university-skill-development-learning-course-cartoon-style-clip-art-for-mobile-app-isolated-rgb-illustration-vector.jpg" width = "350" height = "250" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">COURSES</h5>
+            <p class="card-text">See, add, delete or change information of courses such as course code, course name and college code.</p>
+          </div>
+          <div class="card-footer">
+            <a href="/course" class="btn btn-primary">Courses Page</a>
+          </div>
+        </div>
+        <div class="card border-0 m-1 p-1">
+          <img src="https://cdn-icons-png.flaticon.com/512/2231/2231533.png "width = "350" height = "250" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">COLLEGES</h5>
+            <p class="card-text">See, add, delete or change information of colleges such as college code and college name.</p>
+          </div>
+          <div class="card-footer">
+            <a href="/college" class="btn btn-primary">Colleges Page</a>
+          </div>
+        </div>
+      </div>
 
       {%endblock%}
 
