@@ -35,8 +35,9 @@ def update():
 
         collegeCode = request.form['college_code_edit']
         name_edit = request.form['name_edit']
-        print(name_edit)
-        list = [name_edit.title(), college_code]
+        initCollegeCode = request.form['initCollegeCode']
+        print(initCollegeCode)
+        list = [collegeCode.upper(), name_edit.title(), initCollegeCode.upper()]
         print(list)
         try:
             flash(f"College {collegeCode.upper()} Edited Successfully!", "info")
