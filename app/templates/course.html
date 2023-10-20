@@ -47,7 +47,7 @@
                 </div>
     
                 <div class>
-                    <label for = "cCodeEdit" class = "form-label"> Course Code </label>
+                    <label for = "cCodeEdit" class = "form-label"> College Code </label>
                     <select name = "college_code_edit" id ="cCodeEdit" class="form-select form-select-sm mb-3" aria-label="Large select example">
                         {%for item in college%}
                             <option value="{{item.values()|list|first}}">{{ item.values()|list|first }}</option>
@@ -99,7 +99,7 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
 
             <div>
-                <label for = "cCode" class = "form-label"> College Code </label>
+                <label for = "cCode" class = "form-label"> Course Code </label>
                 <input name = "course_code" id = "cCode" type="text" class="form-control" placeholder="Ex. BSCS" aria-label="Course Code" maxlength ="10" required>
             </div>
 
@@ -109,7 +109,7 @@
             </div>
 
             <div class>
-                <label for = "cCodeEdit" class = "form-label"> Course Code </label>
+                <label for = "cCodeEdit" class = "form-label"> College Code </label>
                 <select name = "college_code" id ="cCodeEdit" class="form-select form-select-sm mb-3" aria-label="Large select example">
                     {%for item in college%}
                         <option value="{{item.values()|list|first}}">{{ item.values()|list|first }}</option>
