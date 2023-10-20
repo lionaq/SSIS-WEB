@@ -17,34 +17,6 @@
 
     {%include "table.html"%}
 
-    <!--
-     <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
-        <table class="table table-condensed text-center" id = "studentTable">
-          <thead class = "sticky-top z-3">
-              <tr>
-                {%for column in data[0]%} <th scope="col">{{column.replace("_", " ").upper()}}</th> {% endfor %}
-                <th scope = "col"> ACTIONS </th>
-              </tr>
-          </thead>
-          <tbody>
-            {% for entry in data %}
-            <tr>
-              {%for row in entry.values()%}
-                <td>{{ row }}</td>
-              {%endfor%}
-              <td>
-                <form action ="{{url_for('student.delete', id = entry.values()|list|first)}}" method="POST">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                    <button type="button" id ="editButton" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
-                    <button type ="submit" class = "btn btn-danger btn-sm" onclick = "return confirm('Delete Student {{entry.values()|list|first}} ?')">Delete</button>
-                </form>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        </div>} 
-        -->
 <!----edit Modal---->
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -60,13 +32,15 @@
                             <div class="row">
                                 <label for = "idEditOne"  class = "form-label"> Student ID </label>
                                 <div class="col-3">
-                                    <input name = "idOne_edit" id = "idEditOne"  type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4"  minlength = "4"  style = "background-color:  #E9ECEF; color = 6C757D" readonly>
+                                    <input type="hidden" name="initIdEditOne" id = "initIdEditOne" readonly>
+                                    <input name = "idOne_edit" id = "idEditOne"  type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4"  minlength = "4"  required>
                                 </div>
                                 <div class="col-1 text-center">
                                     <h3>-<h3>
                                 </div>
                                 <div class="col-3">
-                                    <input name = "idTwo_edit" id = "idEditTwo" type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4" minlength = "4" style = "background-color:  #E9ECEF; color = 6C757D" readonly>
+                                    <input type="hidden" name="initIdEditTwo"  id = "initIdEditTwo" readonly>
+                                    <input name = "idTwo_edit" id = "idEditTwo" type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4" minlength = "4" required>
                                 </div>
                             </div>
                             <br>
@@ -151,6 +125,9 @@
                 $('#cCodeEdit').val(cCodeEdit);
                 $('#yLevelEdit').val(yLevelEdit);
                 $('#gEdit').val(gEdit);
+
+                $('#initIdEditOne').val(idOne);
+                $('#initIdEditTwo').val(idTwo);
                 // Set values of other fields similarly
             });
           </script>
@@ -170,13 +147,13 @@
                     <div class="row">
                         <label for = "idOne" class = "form-label"> Student ID </label>
                         <div class="col-3">
-                            <input name = "idOne"  type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4"  minlength = "4" required>
+                            <input name = "idOne"  type="text" inputmode = "numeric" class="form-control" placeholder="YYYY" pattern = "\d*" maxlength = "4"  minlength = "4" required>
                         </div>
                         <div class="col-1 text-center">
                             <h3>-</h3>
                         </div>
                         <div class="col-3">
-                            <input name = "idTwo"  type="text" inputmode = "numeric" class="form-control" placeholder="Ex. 1234" pattern = "\d*" maxlength = "4" minlength = "4" required>
+                            <input name = "idTwo"  type="text" inputmode = "numeric" class="form-control" placeholder="NNNN" pattern = "\d*" maxlength = "4" minlength = "4" required>
                         </div>
                     </div>
 

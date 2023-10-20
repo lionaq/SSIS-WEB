@@ -48,13 +48,19 @@ def update():
         year_level = request.form['year_level_edit']
         gender = request.form['gender_edit']
 
-        list = [ first_name, last_name, course_code, year_level, gender, studentId]
+        initIdOne = request.form['initIdEditOne']
+        initIdTwo = request.form['initIdEditTwo']
+
+        initStudentId = initIdOne + '-' + initIdTwo
+
+        list = [studentId, first_name, last_name, course_code, year_level, gender, initStudentId]
         print(list)
         try:  
             studentModel.update(list)
-            flash(f"Student {studentId} Edited Successfully!", "info")
+            flash(f"Student {initStudentId} Edited Successfully!", "info")
             return redirect (url_for('student.data'))
         except: 
+            flash(f"Student {studentId} Already Exists! Cannot Edit Current Student To Existing Student.", "info")
             return redirect (url_for('student.data'))
         
 @student.route('/student/delete/<string:id>', methods=['POST'])

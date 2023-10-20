@@ -19,7 +19,7 @@ class students(object):
     
     def update(self, value):
         cursor = mysql.connection.cursor(dictionary=True)
-        sql = "UPDATE student_table SET first_name = %s, last_name = %s, course_code = %s, year_level = %s, gender = %s WHERE student_id = %s"
+        sql = "UPDATE student_table SET student_id = %s, first_name = %s, last_name = %s, course_code = %s, year_level = %s, gender = %s WHERE student_id = %s"
         cursor.execute(sql, value)
         mysql.connection.commit()
         cursor.close()
