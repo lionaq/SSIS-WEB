@@ -40,15 +40,15 @@
                     <label for = "cCode" class = "form-label"> Course Code </label>
                     <input name = "course_code_edit" id = "cCode" type="text" class="form-control" placeholder="Ex. BSCS" aria-label="Course Code" maxlength ="10" required>
                 </div>
-    
+                <br>
                 <div>
                     <label for = "course" class = "form-label"> Course </label>
                     <input name = "course_edit" id = "course" type="text" class="form-control" placeholder="Ex. Bachelor of Science in Computer Science" aria-label="Course" maxlength ="80" required>
                 </div>
-    
-                <div class>
+                <br>
+                <div>
                     <label for = "cCodeEdit" class = "form-label"> College Code </label>
-                    <select name = "college_code_edit" id ="cCodeEdit" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                    <select name = "college_code_edit" id ="cCodeEdit" class="form-select form-select-md mb-3" aria-label="Large select example">
                         {%for item in college%}
                             <option value="{{item.values()|list|first}}">{{ item.values()|list|first }}</option>
                         {%endfor%}
@@ -102,15 +102,15 @@
                 <label for = "cCode" class = "form-label"> Course Code </label>
                 <input name = "course_code" id = "cCode" type="text" class="form-control" placeholder="Ex. BSCS" aria-label="Course Code" maxlength ="10" required>
             </div>
-
+            <br>
             <div>
                 <label for = "course" class = "form-label"> Name </label>
                 <input name = "course" id = "course" type="text" class="form-control" placeholder="Ex. Bachelor of Science in Computer Science" aria-label="Course" maxlength ="80" required>
             </div>
-
-            <div class>
+            <br>
+            <div>
                 <label for = "cCodeEdit" class = "form-label"> College Code </label>
-                <select name = "college_code" id ="cCodeEdit" class="form-select form-select-sm mb-3" aria-label="Large select example">
+                <select name = "college_code" id ="cCodeEdit" class="form-select form-select-md mb-3" aria-label="Large select example">
                     {%for item in college%}
                         <option value="{{item.values()|list|first}}">{{ item.values()|list|first }}</option>
                     {%endfor%}
