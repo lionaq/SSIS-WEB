@@ -60,7 +60,7 @@ def update():
             flash(f"Student {initStudentId} Edited Successfully!", "info")
             return redirect (url_for('student.data'))
         except: 
-            flash(f"Student {studentId} Already Exists! Cannot Edit Current Student To Existing Student.", "info")
+            flash(f"Student {studentId} Already Exists! Cannot Edit Current Student To Existing Student.", "error")
             return redirect (url_for('student.data'))
         
 @student.route('/student/delete/<string:id>', methods=['POST'])
