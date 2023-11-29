@@ -21,8 +21,8 @@ def create_app(test_config=None):
     cloudinary.config( 
         cloud_name = CLOUD_NAME, 
         api_key = API_KEY, 
-        api_secret = API_SECRET
-        secure=True;
+        api_secret = API_SECRET,
+        secure=True,
     )
 
 
@@ -36,9 +36,9 @@ def create_app(test_config=None):
 
         return render_template('base.html')
     
-    from .views.student_controller import student
-    from .views.course_controller import course
-    from .views.college_controller import college
+    from .controller.student_controller import student
+    from .controller.course_controller import course
+    from .controller.college_controller import college
 
     app.register_blueprint(student)
     app.register_blueprint(course)

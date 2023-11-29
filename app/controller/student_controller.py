@@ -1,6 +1,9 @@
 from sre_constants import SUCCESS
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.Models import studentModel, courseModel
+from cloudinary import uploader
+from cloudinary.uploader import upload
+from cloudinary.utils import cloudinary_url
 
 student = Blueprint('student', __name__)
 
@@ -8,14 +11,13 @@ student = Blueprint('student', __name__)
 def data():
     result = studentModel.all()
     courseCode = courseModel.all()
-    print(courseCode)
     courses = [item for item in courseCode]
-    print(result)
     return render_template('student.html', data = result, courses = courses)
 
 @student.route('/student/insert', methods = ['POST'])
 def insert():
     if request.method == "POST":
+        studentPic = request.files['studentPic']
         idOne = request.form['idOne']
         idTwo = request.form['idTwo']
         studentId = idOne + '-' + idTwo
@@ -24,11 +26,16 @@ def insert():
         course_code = request.form['course_code']
         year_level = request.form['year_level']
         gender = request.form['gender']
-
-        list = [studentId, first_name, last_name, course_code, year_level, gender]
-        print(list)
         try:
+            if studentPic:
+                upload_result = upload(studentPic, folder="SSIS", resource_type='image')
+                secure_url = upload_result['secure_url']
+            else:
+                secure_url = None
+                
+            list = [secure_url,studentId, first_name, last_name, course_code, year_level, gender]
             studentModel.insert(list)
+            print('PIC IS:',secure_url)
             flash(f"Student {studentId} Added Successfully!", "info")
             return redirect (url_for('student.data'))
         except:

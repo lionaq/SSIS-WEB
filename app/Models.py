@@ -4,14 +4,14 @@ class students(object):
 
     def all(self):
         cursor = mysql.connection.cursor(dictionary=True)
-        cursor.execute("SELECT student_table.student_id, student_table.first_name, student_table.last_name, student_table.course_code, student_table.year_level, student_table.gender, college_table.college_code FROM student_table INNER JOIN course_table on student_table.course_code = course_table.course_code JOIN college_table on course_table.college_code = college_table.college_code ORDER BY student_table.student_id")
+        cursor.execute("SELECT student_table.student_pic, student_table.student_id, student_table.first_name, student_table.last_name, student_table.course_code, student_table.year_level, student_table.gender, college_table.college_code FROM student_table INNER JOIN course_table on student_table.course_code = course_table.course_code JOIN college_table on course_table.college_code = college_table.college_code ORDER BY student_table.student_id")
         students = cursor.fetchall()
         cursor.close()
         return students
     
     def insert(self, values):
         cursor = mysql.connection.cursor(dictionary=True)
-        sql = "INSERT INTO student_table(student_id, first_name, last_name, course_code, year_level, gender) VALUES (%s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO student_table(student_pic, student_id, first_name, last_name, course_code, year_level, gender) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         cursor.execute(sql, values)
         mysql.connection.commit()
         cursor.close()

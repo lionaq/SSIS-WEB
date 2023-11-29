@@ -17,7 +17,37 @@
 
 {%block content%}
 
-    {%include "table.html"%}
+<div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
+    <table class="table table-condensed text-center" id = "{{tableid}}">
+      <thead class = "sticky-top z-3">
+          <tr>
+            {%for column in data[0]%} <th scope="col">{%if column == 'student_pic'%}{%else%}{{column.replace("_", " ").upper()}}{%endif%}</th> {% endfor %}
+            <th scope = "col"> ACTIONS </th>
+          </tr>
+      </thead>
+      <tbody>
+        {% for entry in data %}
+        <tr>
+            <td><img class = "img-rounded" src= {%if entry.student_pic is none%}'{{url_for('static', filename='img/default_profilepic.png')}}'{%else%}'{{entry.student_pic}}'{%endif%} style = "height:60px; width:60px;"/></td>
+            <td>{{entry.student_id}}</td>
+            <td>{{entry.first_name}}</td>
+            <td>{{entry.last_name}}</td>
+            <td>{{entry.course_code}}</td>
+            <td>{{entry.year_level}}</td>
+            <td>{{entry.gender}}</td>
+            <td>{{entry.college_code}}</td>
+          <td>
+            <form action ="{{url_for(urlRedirect, id = entry.student_id)}}" method="POST">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                <button type="button" id ="editButton" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                <button type ="submit" class = "btn btn-danger btn-sm" onclick = "return confirm('{{deleteWarningMsg}}')">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
 
 <!----edit Modal---->
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -134,7 +164,6 @@
             });
           </script>
 <!----add Modal---->
-
     <div class="modal fade" id="addStudent" tabindex="-1" aria-labelledby="addStudentLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -144,18 +173,33 @@
             </div>
             <br>
             <div class="modal-body">
-                <form action ="{{url_for('student.insert')}}" method = "POST">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                    <div class="row">
-                        <label for = "idOne" class = "form-label"> Student ID </label>
-                        <div class="col-3">
-                            <input name = "idOne"  type="text" id = "idOne" inputmode = "numeric" class="form-control" placeholder="YYYY" pattern = "\d*" maxlength = "4"  minlength = "4" required>
+                <form action ="{{url_for('student.insert')}}" method = "POST" enctype="multipart/form-data">
+                    <div class="row d-flex justify-content-center">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                        <div class="col-sm-4">
+                            <input type="file" id = "idPic" accept="image/*" style = "display:none;" name = "studentPic">
+                            <label class="postUpload overflow-hidden" for="idPic" style="position: relative; border-radius: 5px; border: 3px dashed #000; cursor:pointer; width:125px; height:125px;">
+                                <!-- Add a container for previews -->
+                                <div id="filePreviews" style = "width:100%; height:350px;">
+                                    <img id="imagePreview" src="{{url_for('static', filename='img/default_profilepic.png')}}" alt="File Preview" class="img-thumbnail" style="width:100%; height:100%; opacity:0.2; object-fit: cover; position: absolute;">
+                                </div>
+                                <a id="uploadCaption"> Click in this area to upload images and/or videos </a>
+                                <button class="btn z-5" type="button" id="clearFiles" style="visibility:visible; position: absolute; top:-2%; left: 83%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); font-size: 50px; width:45%; height:50%;">&times;</button>
+                            </label>
                         </div>
-                        <div class="col-1 text-center">
-                            <h3>-</h3>
-                        </div>
-                        <div class="col-3">
-                            <input name = "idTwo"  type="text" id = "idTwo" inputmode = "numeric" class="form-control" placeholder="NNNN" pattern = "\d*" maxlength = "4" minlength = "4" required>
+                        <div class="col-sm-8">
+                            <label for = "idOne" class = "form-label"> Student ID </label>
+                            <div class="row row-cols-3">
+                                <div class="col">
+                                    <input name = "idOne"  type="text" id = "idOne" inputmode = "numeric" class="form-control" placeholder="YYYY" pattern = "\d*" maxlength = "4"  minlength = "4" required>
+                                </div>
+                                <div class="col-1 text-center">
+                                    <h3>-</h3>
+                                </div>
+                                <div class="col">
+                                    <input name = "idTwo"  type="text" id = "idTwo" inputmode = "numeric" class="form-control" placeholder="NNNN" pattern = "\d*" maxlength = "4" minlength = "4" required>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -222,5 +266,73 @@
             $('#idTwo').focus();
         }
     });
+
+    $(document).ready(function () {
+        $("#clearFiles").on("click", function (e) {
+            e.preventDefault();
+            $("#content").val('');  // Clear the file input field
+            clearFilePreview(divClear);
+        });
+    });
+    
+    function isFormValid() {
+        let form = $("#postForm")[0];
+        return form.checkValidity(); // This assumes your form has a 'required' attribute on the necessary fields
+    }
+    document.getElementById("content").addEventListener("change", function (event) {
+        let input = event.target;
+        if (input.files.length == 0) { return; }
+        clearFilePreview(' ');
+        let iterCount = 0;
+        Array.from(input.files).forEach(function (file) {
+            iterCount++;
+            let reader = new FileReader();
+            let preview = document.createElement('div');
+            if (iterCount < 2) { preview.className = 'carousel-item active'; } else { preview.className = 'carousel-item'; }
+            preview.style.overflow = 'hidden'; // Hide overflow to maintain consistent size
+    
+            reader.onload = function () {
+                if (file.type.startsWith('image/')) {
+                    // For image files
+                    let img = document.createElement('img');
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover'; // Maintain aspect ratio for images
+                    img.src = reader.result;
+                    preview.appendChild(img);
+                } else if (file.type.startsWith('video/')) {
+                    // For video files
+                    let video = document.createElement('video');
+                    video.style.width = '100%';
+                    video.style.height = '100%';
+                    video.style.objectFit = 'cover'; // Maintain aspect ratio for videos
+                    video.setAttribute('controls', 'false'); // Disable video controls
+                    video.setAttribute('disablePictureInPicture', 'true'); // Disable Picture-in-Picture mode
+                    let source = document.createElement('source');
+                    source.src = URL.createObjectURL(file);
+                    source.type = file.type;
+                    video.appendChild(source);
+                    preview.appendChild(video);
+                }
+    
+                filePreviewContainer.appendChild(preview);
+            };
+    
+            reader.readAsDataURL(file);
+        });
+    
+        clearBtn.style.visibility = 'visible';
+        filePreviewContainer.style.display = 'flex';
+        defaultImg.style.visibility = 'hidden';
+        uploadCaption.style.visibility = 'hidden';
+    });
+    
+    function clearFilePreview(defaultPrev) {
+        filePreviewContainer.innerHTML = defaultPrev; // Clear previous previews
+        clearBtn.style.visibility = 'hidden';
+        filePreviewContainer.style.display = 'block';
+        defaultImg.style.visibility = 'visible';
+        uploadCaption.style.visibility = 'visible';
+    }
 </script>
 {%endblock%}
