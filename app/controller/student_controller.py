@@ -45,7 +45,7 @@ def insert():
 @student.route('/student/update', methods = ['POST'])
 def update():
     if request.method == "POST":
-
+        studentPicEdit = request.files['studentPicEdit']
         idOne = request.form['idOne_edit']
         idTwo = request.form['idTwo_edit']
         studentId = idOne + '-' + idTwo

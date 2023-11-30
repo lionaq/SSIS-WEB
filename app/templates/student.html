@@ -58,10 +58,27 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action ="{{url_for('student.update')}}" method="POST">
+                        <form action ="{{url_for('student.update')}}" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
                             <br>
                             <div class="row">
+                                <div class = 'row row-cols-2 d-flex justify-content-center'>
+                                    <div class = "col">
+                                        <a>Current Pic:</a>
+                                        <div class="img rounded-pill overflow-hidden d-flex justify-content-center mx-auto mb-4 mt-2" style="position: relative; border-radius: 5px; border: 3px solid #000; width:145px; height:145px;">
+                                            <img id="imageCurrentPreviewEdit" src="#" alt="File Preview" class="img rounded-pill" style="width:100%; height:100%; object-fit: cover; position: absolute;">
+                                        </div>
+                                    </div>
+                                    <div class = "col">
+                                        <input type="file" id = "idPicEdit" accept="image/*" style = "display:none;" name = "studentPicEdit">
+                                        <a>Change Pic Here:</a>
+                                        <label for = "idPicEdit" class="img rounded-pill overflow-hidden d-flex justify-content-center mx-auto mb-4 mt-2" style="position: relative; border-radius: 5px; border: 3px dashed #000; width:145px; height:145px;  cursor:pointer;">
+                                            <img id="imagePreviewEdit" src="#" class="img rounded-pill" style="width:100%; height:100%; object-fit: cover; position: absolute;">
+                                            <a id="uploadCaptionEdit" style = "position:absolute; top:25%; left: 53%; transform: translate(-50%, -50%); font-size:80px; opacity:0.7; -ms-transform: translate(-50%, -50%);width:45%; height:50%;"> &plus; </a>
+                                            <button class="btn z-5" type="button" id="clearFilesEdit" style="visibility:hidden; position: absolute; top:10%; left: 75%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); font-size: 50px; width:45%; height:50%;">&times;</button>
+                                        </label>
+                                    </div>
+                                </div>
                                 <label for = "idEditOne"  class = "form-label"> Student ID </label>
                                 <div class="col-3">
                                     <input type="hidden" name="initIdEditOne" id = "initIdEditOne" readonly>
@@ -137,19 +154,21 @@
             $('button[data-bs-toggle="modal"]').click(function() {
                 console.log("Edit button clicked.");
                 let row = $(this).closest('tr');
+                let studentPic = row.find('img').attr('src');
                 let studentId = row.find('td:eq(1)').text();
                 let fNameEdit = row.find('td:eq(2)').text();
                 let lNameEdit = row.find('td:eq(3)').text();
                 let cCodeEdit = row.find('td:eq(4)').text();
                 let yLevelEdit = row.find('td:eq(5)').text();
                 let gEdit = row.find('td:eq(6)').text();
-                console.log(cCodeEdit);
+                console.log(studentPic);
 
                 splitId = studentId.split("-");
                 console.log(splitId);
                 let idOne = splitId[0];
                 let idTwo = splitId[1];
 
+                $('#imageCurrentPreviewEdit').attr('src', studentPic);
                 $('#idEditOne').val(idOne);
                 $('#idEditTwo').val(idTwo);
                 $('#fNameEdit').val(fNameEdit);
@@ -179,10 +198,7 @@
                         <div class="col-sm-4 me-3 d-flex justify-content-center">
                             <input type="file" id = "idPic" accept="image/*" style = "display:none;" name = "studentPic">
                             <label class="img rounded-pill overflow-hidden" for="idPic" style="position: relative; border-radius: 5px; border: 3px dashed #000; cursor:pointer; width:145px; height:145px;">
-                                <!-- Add a container for previews -->
-                                <div id="filePreviews" style = "width:100%; height:350px;">
-                                    <img id="imagePreview" src="{{url_for('static', filename='img/default_profilepic.png')}}" alt="File Preview" class="img rounded-pill" style="width:100%; height:100%; object-fit: cover; position: absolute;">
-                                </div>
+                                <img id="imagePreview" src="{{url_for('static', filename='img/default_profilepic.png')}}" alt="File Preview" class="img rounded-pill" style="width:100%; height:100%; object-fit: cover; position: absolute;">
                                 <a id="uploadCaption" style = "position:absolute; top:26%; left: 51.7%; transform: translate(-50%, -50%); font-size:80px; opacity:0.7; -ms-transform: translate(-50%, -50%);width:45%; height:50%;"> &plus; </a>
                                 <button class="btn z-5" type="button" id="clearFiles" style="visibility:hidden; position: absolute; top:10%; left: 75%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); font-size: 50px; width:45%; height:50%;">&times;</button>
                             </label>
@@ -262,8 +278,11 @@
 
 <script>
     let clearBtn = document.getElementById("clearFiles");
+    let clearBtnEdit = document.getElementById("clearFilesEdit");
     let img = document.getElementById("imagePreview");
+    let imgEdit = document.getElementById("imagePreviewEdit");
     let caption = document.getElementById("uploadCaption");
+    let captionEdit = document.getElementById("uploadCaptionEdit");
     $('#idOne').keyup(function() {
         if (this.value.length == this.maxLength) {
             $('#idTwo').focus();
@@ -275,6 +294,12 @@
             e.preventDefault();
             $("#idPic").val('');  // Clear the file input field
             clearFilePreview();
+        });
+
+        $("#clearFilesEdit").on("click", function (e) {
+            e.preventDefault();
+            $("#idPicEdit").val('');  // Clear the file input field
+            clearFilePreviewEdit();
         });
     });
     
@@ -292,11 +317,32 @@
         reader.readAsDataURL(event.target.files[0]);
         
     });
+
+    document.getElementById("idPicEdit").addEventListener("change", function (event) {
+        console.log("im in");
+        let reader = new FileReader();
+
+        reader.onload = function(){
+            clearBtnEdit.style.visibility = 'visible';
+            captionEdit.style.visibility = 'hidden';
+            imgEdit.src = reader.result;
+            console.log(reader.result);
+        };
+
+        reader.readAsDataURL(event.target.files[0]);
+        
+    });
     
     function clearFilePreview(defaultPrev) {
         clearBtn.style.visibility = 'hidden';
         caption.style.visibility = 'visible';
         img.src = "{{url_for('static',filename='img/default_profilepic.png')}}"
+    }
+
+    function clearFilePreviewEdit(defaultPrev) {
+        clearBtnEdit.style.visibility = 'hidden';
+        captionEdit.style.visibility = 'visible';
+        imgEdit.src = "#"
     }
 </script>
 {%endblock%}
