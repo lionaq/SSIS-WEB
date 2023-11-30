@@ -1,4 +1,5 @@
 from app import mysql
+import re
 
 class students(object):
 
@@ -24,6 +25,21 @@ class students(object):
         mysql.connection.commit()
         cursor.close()
         return
+    def fetchProfilePic(self,value):
+        cursor = mysql.connection.cursor(dictionary=True)
+        sql = "SELECT student_pic FROM student_table WHERE student_id = %s"
+        cursor.execute(sql, value)
+        oldPic = cursor.fetchall()
+        cursor.close()
+        return oldPic
+
+    def updateProfilePic(self,value):
+        cursor = mysql.connection.cursor(dictionary=True)
+        sql = "UPDATE student_table SET student_pic = %s WHERE student_id = %s"
+        cursor.execute(sql, value)
+        mysql.connection.commit()
+        cursor.close()
+        return
     
     def delete(self,value):
         cursor = mysql.connection.cursor(dictionary=True)
@@ -32,6 +48,10 @@ class students(object):
         mysql.connection.commit()
         cursor.close()
         return
+    
+    def getPublicId(self,value):
+        match = re.search(r'/v\d+/(SSIS/[^/]+)\.\w+', value)
+        return match.group(1) if match else None
 
 class courses(object):
 

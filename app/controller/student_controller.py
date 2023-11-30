@@ -64,6 +64,21 @@ def update():
         print(list)
         try:  
             studentModel.update(list)
+            if studentPicEdit:
+                print("IMIN")
+                oldPic = studentModel.fetchProfilePic([studentId])
+                print(oldPic[0]['student_pic'])
+                if oldPic[0]['student_pic'] != None:
+                    print("WHY")
+                    public_id = studentModel.getPublicId(oldPic[0]['student_pic'])
+                    print(public_id)
+                    delete = uploader.destroy(public_id)
+                    print(delete, " ", oldPic[0]['student_pic'], "DELETED")
+
+                result = upload(studentPicEdit, folder="SSIS", resource_type='image')
+                secure_url = result['secure_url']
+                studentModel.updateProfilePic([secure_url, studentId])
+
             flash(f"Student {initStudentId} Edited Successfully!", "info")
             return redirect (url_for('student.data'))
         except: 
@@ -73,7 +88,18 @@ def update():
 @student.route('/student/delete/<string:id>', methods=['POST'])
 def delete(id):
     if request.method == "POST":
-        data = (id,)
-        studentModel.delete(data)
-        flash(f"Student {id} Deleted Successfully!", "info")
-        return redirect(url_for('student.data'))
+        try:
+            oldPic = studentModel.fetchProfilePic([id])
+            if oldPic[0]['student_pic'] != None:
+                public_id = studentModel.getPublicId(oldPic[0]['student_pic'])
+                delete = uploader.destroy(public_id)
+                print(delete, " ", oldPic[0]['student_pic'], "DELETED")
+
+            data = (id,)
+            studentModel.delete(data)
+            flash(f"Student {id} Deleted Successfully!", "info")
+            return redirect(url_for('student.data'))
+        
+        except:
+            flash(f"Student {id} Deletion Failed!", "error")
+            return redirect(url_for('student.data'))
