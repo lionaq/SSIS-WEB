@@ -316,6 +316,26 @@
         });
     });
     
+    const uploadField = document.getElementById("idPic");
+
+    uploadField.onchange = function() {
+        console.log('tset')
+        if(this.files[0].size > 1048576){
+        alert("File is too big! Image must be 1 mb or less");
+        this.value = "";
+        }
+    }
+
+    const uploadFieldEdit = document.getElementById("idPicEdit");
+
+    uploadFieldEdit.onchange = function() {
+        console.log('tset')
+        if(this.files[0].size > 1048576){
+        alert("File is too big! Image must be 1 mb or less");
+        this.value = "";
+        }
+    }
+    
     document.getElementById("idPic").addEventListener("change", function (event) {
         console.log("im in");
         let reader = new FileReader();
@@ -324,7 +344,6 @@
             clearBtn.style.visibility = 'visible';
             caption.style.visibility = 'hidden';
             img.src = reader.result;
-            console.log(reader.result);
         };
 
         reader.readAsDataURL(event.target.files[0]);
